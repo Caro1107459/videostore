@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML5视频播放器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        #container {
+            width: 800px;
+            margin: 20px;
+            position: relative;
+        }
+
+        #title {
+            text-align: left;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        #player {
+            width: 800px;
+            height: 450px;
+            background-color: #000;
+        }
+
+        #aiButton {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: white;
+            color: darkblue;
+            border: 2px solid darkblue;
+            position: absolute;
+            right: 0;
+            top: 500px;
+            /* 视频高度450px + 1cm (大约37.8px) */
+        }
+
+        #popup {
+            display: none;
+            position: absolute;
+            left: 880px;
+            /* 视频宽度800px + 1cm (大约37.8px) */
+            top: 0;
+            width: 300px;
+            height: 533px;
+            overflow-y: auto;
+            background-color: #e0f7fa;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            text-align: left;
+        }
+
+       .close-btn {
+            cursor: pointer;
+            color: #f00;
+            float: right;
+            font-size: 18px;
+        }
+
+       .bold {
+            font-weight: bold;
+        }
+
+       .blue {
+            color: darkblue;
+        }
+
+       .small-text {
+            font-size: 14px;
+        }
+
+       .divider {
+            border-top: 1px solid #ccc;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="container">
+        <div id="title">鱼的腥味从何而来？</div>
+        <!-- 使用HTML5的video标签替换原来的播放初始化方式 -->
+        <video id="player" controls width="800" height="450">
+            <source src="6.mp4" type="video/mp4">
+            您的浏览器不支持HTML5视频播放。
+        </video>
+
+        <button id="aiButton">
+            AI小助手
+        </button>
+    </div>
+
+    <div id="popup">
+        <span class="close-btn" onclick="closePopup()">×</span>
+        <p class="bold blue">AI小助手</p>
+        <p style="background-color: white;">视频总结</p>
+        <p class="small-text">鱼腥味的来源及其去腥的科学方法。鱼腥味主要来源于海鱼的蛋白质在高压环境下的变化，以及淡水鱼体内的土臭素和二甲基异雌醇。去腥的方法包括低温速冻技术、微生物去腥、清水养殖等。此外，视频还提到了一些日常生活中去腥的小技巧，如使用柠檬汁、去除鱼腩等。</p>
+        <p style="background-color: white;">要点</p>
+        <p class="bold small-text">科学去腥，低温速冻技术。</p>
+        <p class="small-text"><a href="#" onclick="seekToTime(1); return false;">00:01 鱼腥味来源复杂，海鱼在高压环境下产生，淡水鱼则由土臭素和二甲基异雌醇引起。</a></p>
+        <p class="small-text"><a href="#" onclick="seekToTime(45); return false;">00:45 淡水鱼腥味主要来源于水中藻类和菌类代谢，长期生活在此类环境中的鱼腥味更重。</a></p>
+        <p class="small-text"><a href="#" onclick="seekToTime(112); return false;">01:52 养殖塘的鱼腥味更大，水的流动性差且养殖户会撒肥料，导致腥臭味更浓。</a></p>
+        <div class="divider"></div>
+        <p class="bold small-text">科学去腥，养殖改良，清水养殖，去除鱼腥味。</p>
+        <p class="small-text"><a href="#" onclick="seekToTime(136); return false;">02:16 冷冻时真空包装可减少鱼肉与空气接触，抑制鱼腥味分子生成。</a></p>
+        <p class="small-text"><a href="#" onclick="seekToTime(185); return false;">03:05 钓水鱼法:清水饲养鱼，去除体内腥味物质提升口感。</a></p>
+        <p class="small-text"><a href="#" onclick="seekToTime(233); return false;">03:53 柠檬汁可中和鱼腥味，鱼腩处腥味集中，但也是营养宝库。</a></p>
+        <div class="divider"></div>
+        <p class="bold small-text">下期再见。</p>
+        <p class="small-text"><a href="#" onclick="seekToTime(268); return false;">04:28 下期再见</a></p>
+    </div>
+
+    <script>
+        // 移除了原来关于polyvPlayer初始化相关的代码
+
+        document.getElementById('aiButton').addEventListener('click', function () {
+            document.getElementById('popup').style.display = 'block';
+        });
+
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+
+        function seekToTime(seconds) {
+            // 由于更换了视频播放方式，这里的seek操作需要针对新的video标签来调整
+            var videoPlayer = document.getElementById('player');
+            if (videoPlayer && typeof videoPlayer.currentTime!== 'undefined') {
+                videoPlayer.currentTime = seconds;
+                console.log('Seeking to:', seconds);
+            } else {
+                console.error('Video player not available or seek function not available.');
+            }
+        }
+    </script>
+
+</body>
+
+</html>
