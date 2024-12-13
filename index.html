@@ -37,18 +37,55 @@
             background-color: #000;
         }
 
+        #button-row {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            position: relative;
+            top: 0;
+        }
+
+        #likeButton {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: white;
+            color: skyblue;
+            border: 1px solid skyblue;
+            padding: 5px;
+            margin-right: 5px;
+        }
+
+        #coinButton,
+        #collectButton,
+        #shareButton {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: white;
+            color: skyblue;
+            border: 1px solid skyblue;
+            padding: 5px;
+            margin-right: 5px;
+        }
+
         #aiButton {
             margin-top: 10px;
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
-            background-color: white;
-            color: darkblue;
-            border: 2px solid darkblue;
+            background-color: white; /* 背景变为白色 */
+            color: skyblue; /* 字体颜色变为天蓝色 */
+            border: 2px solid skyblue; /* 边框变为天蓝色 */
+            font-weight: bold; /* 保持加粗 */
+            border-width: 2px;
+            border-radius: 5px; /* 设置边框为圆角，这里圆角半径为5px，可按需调整数值大小来改变圆角程度 */
             position: absolute;
             right: 0;
-            top: 500px;
-            /* 视频高度450px + 1cm (大约37.8px) */
         }
 
         #popup {
@@ -67,28 +104,28 @@
             text-align: left;
         }
 
-       .close-btn {
+     .close-btn {
             cursor: pointer;
             color: #f00;
             float: right;
             font-size: 18px;
         }
 
-       .bold {
+     .bold {
             font-weight: bold;
         }
 
-       .blue {
+     .blue {
             color: darkblue;
         }
 
-       .small-text {
+     .small-text {
             font-size: 14px;
         }
 
-       .divider {
+     .divider {
             border-top: 1px solid #ccc;
-            margin: 10px 0;
+            margin-top: 30px;
         }
     </style>
 </head>
@@ -97,15 +134,21 @@
 
     <div id="container">
         <div id="title">鱼的腥味从何而来？</div>
-        <!-- 使用HTML5的video标签替换原来的播放初始化方式 -->
         <video id="player" controls width="800" height="450">
-            <source src="6.mp4" type="video/mp4">
+            <source src="D:\Desktop\6.mp4" type="video/mp4">
             您的浏览器不支持HTML5视频播放。
         </video>
-
-        <button id="aiButton">
-            AI小助手
-        </button>
+        <div id="button-row">
+            <button id="likeButton">点赞</button>
+            <button id="coinButton">投币</button>
+            <button id="collectButton">收藏</button>
+            <button id="shareButton">转发</button>
+            <button id="aiButton">
+                AI小助手
+            </button>
+        </div>
+        <hr class="divider">
+        <p>鱼腥味到底从何而来呢，你别说还真挺复杂，一起来看看吧！</p>
     </div>
 
     <div id="popup">
