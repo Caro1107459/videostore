@@ -78,12 +78,12 @@
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
-            background-color: white; /* 背景变为白色 */
-            color: skyblue; /* 字体颜色变为天蓝色 */
-            border: 2px solid skyblue; /* 边框变为天蓝色 */
-            font-weight: bold; /* 保持加粗 */
+            background-color: white;
+            color: skyblue;
+            border: 2px solid skyblue;
+            font-weight: bold;
             border-width: 2px;
-            border-radius: 5px; /* 设置边框为圆角，这里圆角半径为5px，可按需调整数值大小来改变圆角程度 */
+            border-radius: 5px;
             position: absolute;
             right: 0;
         }
@@ -92,7 +92,6 @@
             display: none;
             position: absolute;
             left: 880px;
-            /* 视频宽度800px + 1cm (大约37.8px) */
             top: 0;
             width: 300px;
             height: 533px;
@@ -104,26 +103,26 @@
             text-align: left;
         }
 
-     .close-btn {
+        .close-btn {
             cursor: pointer;
             color: #f00;
             float: right;
             font-size: 18px;
         }
 
-     .bold {
+        .bold {
             font-weight: bold;
         }
 
-     .blue {
+        .blue {
             color: darkblue;
         }
 
-     .small-text {
+        .small-text {
             font-size: 14px;
         }
 
-     .divider {
+        .divider {
             border-top: 1px solid #ccc;
             margin-top: 30px;
         }
@@ -134,10 +133,15 @@
 
     <div id="container">
         <div id="title">鱼的腥味从何而来？</div>
-        <video id="player" controls width="800" height="450">
+        <video id="player" width="800" height="450">
             <source src="6.mp4" type="video/mp4">
             您的浏览器不支持HTML5视频播放。
         </video>
+        <div id="custom-controls">
+            <button onclick="playPause()">播放/暂停</button>
+            <button onclick="stopVideo()">停止</button>
+            <!-- 添加其他自定义控件 -->
+        </div>
         <div id="button-row">
             <button id="likeButton">点赞</button>
             <button id="coinButton">投币</button>
@@ -173,7 +177,20 @@
     </div>
 
     <script>
-        // 移除了原来关于polyvPlayer初始化相关的代码
+        var video = document.getElementById('player');
+
+        function playPause() {
+            if (video.paused || video.ended) {
+                video.play();
+            } else {
+                video.pause();
+            }
+        }
+
+        function stopVideo() {
+            video.pause();
+            video.currentTime = 0;
+        }
 
         document.getElementById('aiButton').addEventListener('click', function () {
             document.getElementById('popup').style.display = 'block';
@@ -184,10 +201,8 @@
         }
 
         function seekToTime(seconds) {
-            // 由于更换了视频播放方式，这里的seek操作需要针对新的video标签来调整
-            var videoPlayer = document.getElementById('player');
-            if (videoPlayer && typeof videoPlayer.currentTime!== 'undefined') {
-                videoPlayer.currentTime = seconds;
+            if (video && typeof video.currentTime !== 'undefined') {
+                video.currentTime = seconds;
                 console.log('Seeking to:', seconds);
             } else {
                 console.error('Video player not available or seek function not available.');
