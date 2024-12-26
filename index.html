@@ -172,34 +172,51 @@
 
     <script src="https://vjs.zencdn.net/7.15.4/video.min.js"></script>
     <script>
-        var player = videojs('player', {
-            controlBar: {
-                playbackRateMenuButton: false // 移除播放速度控件
-            }
-        });
+    var player = videojs('player', {
+        controlBar: {
+            playbackRateMenuButton: false // 移除播放速度控件
+        },
+        autoplay: false, // 根据需要设置autoplay
+        preload: 'auto' // 预加载视频
+    });
 
-        document.getElementById('aiButton').addEventListener('click', function () {
-            document.getElementById('popup').style.display = 'block';
-        });
+    player.ready(function() {
+        console.log('Video is ready.');
+    });
 
-        function closePopup() {
-            document.getElementById('popup').style.display = 'none';
-        }
+    document.getElementById('aiButton').addEventListener('click', function () {
+        document.getElementById('popup').style.display = 'block';
+    });
 
-        function seekToTime(seconds) {
+    function closePopup() {
+        document.getElementById('popup').style.display = 'none';
+    }
+
+    function seekToTime(seconds) {
+        if (player) {
             player.currentTime(seconds);
             console.log('Seeking to:', seconds);
         }
+    }
 
-        // 绑定跳转链接
-        var links = document.querySelectorAll('[data-seek]');
-        links.forEach(function(link) {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                seekToTime(parseInt(this.getAttribute('data-seek')));
-            });
+    // 绑定跳转链接
+    var links = document.querySelectorAll('[data-seek]');
+    links.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            seekToTime(parseInt(this.getAttribute('data-seek')));
         });
-    </script>
+    });
+
+    // 监听seeking和seeked事件
+    player.on('seeking', function() {
+        console.log('Seeking...');
+    });
+
+    player.on('seeked', function() {
+        console.log('Seeked');
+    });
+</script>
 
 </body>
 
