@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Cache-Control" content="max-age=3600">
     <title>科学去鱼腥味</title>
+    <link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet" />
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -133,15 +134,10 @@
 
     <div id="container">
         <div id="title">鱼的腥味从何而来？</div>
-        <video id="player" width="800" height="450">
+        <video id="player" class="video-js vjs-default-skin" controls preload="auto" width="800" height="450">
             <source src="6.mp4" type="video/mp4">
             您的浏览器不支持HTML5视频播放。
         </video>
-        <div id="custom-controls">
-            <button onclick="playPause()">播放/暂停</button>
-            <button onclick="stopVideo()">停止</button>
-            <!-- 添加其他自定义控件 -->
-        </div>
         <div id="button-row">
             <button id="likeButton">点赞</button>
             <button id="coinButton">投币</button>
@@ -176,21 +172,13 @@
         <p class="small-text"><a href="#" onclick="seekToTime(268); return false;">04:28 下期再见</a></p>
     </div>
 
+    <script src="https://vjs.zencdn.net/7.15.4/video.min.js"></script>
     <script>
-        var video = document.getElementById('player');
-
-        function playPause() {
-            if (video.paused || video.ended) {
-                video.play();
-            } else {
-                video.pause();
+        var player = videojs('player', {
+            controlBar: {
+                playbackRateMenuButton: false // 移除播放速度控件
             }
-        }
-
-        function stopVideo() {
-            video.pause();
-            video.currentTime = 0;
-        }
+        });
 
         document.getElementById('aiButton').addEventListener('click', function () {
             document.getElementById('popup').style.display = 'block';
@@ -201,8 +189,9 @@
         }
 
         function seekToTime(seconds) {
-            if (video && typeof video.currentTime !== 'undefined') {
-                video.currentTime = seconds;
+            var videoPlayer = document.getElementById('player');
+            if (videoPlayer && typeof videoPlayer.currentTime !== 'undefined') {
+                videoPlayer.currentTime = seconds;
                 console.log('Seeking to:', seconds);
             } else {
                 console.error('Video player not available or seek function not available.');
