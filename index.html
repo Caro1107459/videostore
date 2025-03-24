@@ -131,13 +131,9 @@
 </head>
 
 <body>
-
     <div id="container">
         <div id="title">鱼的腥味从何而来？</div>
-        <video id="player" class="video-js vjs-default-skin" controls preload="auto" width="800" height="450">
-            <source src="6.mp4" type="video/mp4">
-            您的浏览器不支持HTML5视频播放。
-        </video>
+        <div id="player"></div>
         <div id="button-row">
             <button id="likeButton">点赞</button>
             <button id="coinButton">投币</button>
@@ -157,67 +153,52 @@
         <p class="small-text">鱼腥味的来源及其去腥的科学方法。鱼腥味主要来源于海鱼的蛋白质在高压环境下的变化，以及淡水鱼体内的土臭素和二甲基异雌醇。去腥的方法包括低温速冻技术、微生物去腥、清水养殖等。此外，视频还提到了一些日常生活中去腥的小技巧，如使用柠檬汁、去除鱼腩等。</p>
         <p style="background-color: white;">要点</p>
         <p class="bold small-text">科学去腥，低温速冻技术。</p>
-        <p class="small-text"><a href="#" data-seek="1">00:01 鱼腥味来源复杂，海鱼在高压环境下产生，淡水鱼则由土臭素和二甲基异雌醇引起。</a></p>
-        <p class="small-text"><a href="#" data-seek="45">00:45 淡水鱼腥味主要来源于水中藻类和菌类代谢，长期生活在此类环境中的鱼腥味更重。</a></p>
-        <p class="small-text"><a href="#" data-seek="112">01:52 养殖塘的鱼腥味更大，水的流动性差且养殖户会撒肥料，导致腥臭味更浓。</a></p>
+       <p class="small-text"><a href="#" onclick="seekToTime(1); return false;">00:01 鱼腥味来源复杂，海鱼在高压环境下产生，淡水鱼则由土臭素和二甲基异雌醇引起。</a></p>
+       <p class="small-text"><a href="#" onclick="seekToTime(45); return false;">00:45 淡水鱼腥味主要来源于水中藻类和菌类代谢，长期生活在此类环境中的鱼腥味更重。</a></p>
+        <p class="small-text"><a href="#" onclick="seekToTime(112); return false;">01:52 养殖塘的鱼腥味更大，水的流动性差且养殖户会撒肥料，导致腥臭味更浓。</a></p>
         <div class="divider"></div>
         <p class="bold small-text">科学去腥，养殖改良，清水养殖，去除鱼腥味。</p>
-        <p class="small-text"><a href="#" data-seek="136">02:16 冷冻时真空包装可减少鱼肉与空气接触，抑制鱼腥味分子生成。</a></p>
-        <p class="small-text"><a href="#" data-seek="185">03:05 钓水鱼法：清水饲养鱼，去除体内腥味物质提升口感。</a></p>
-        <p class="small-text"><a href="#" data-seek="233">03:53 柠檬汁可中和鱼腥味，鱼腩处腥味集中，但也是营养宝库。</a></p>
+        <p class="small-text"><a href="#" onclick="seekToTime(136); return false;">02:16 冷冻时真空包装可减少鱼肉与空气接触，抑制鱼腥味分子生成。</a></p>
+      <p class="small-text"><a href="#" onclick="seekToTime(185); return false;">03:05 钓水鱼法：清水饲养鱼，去除体内腥味物质提升口感。</a></p>
+      <p class="small-text"><a href="#" onclick="seekToTime(233); return false;">03:53 柠檬汁可中和鱼腥味，鱼腩处腥味集中，但也是营养宝库。</a></p>
         <div class="divider"></div>
         <p class="bold small-text">下期再见。</p>
         <p class="small-text"><a href="#" data-seek="268">04:28 下期再见</a></p>
     </div>
 
-    <script src="https://vjs.zencdn.net/7.15.4/video.min.js"></script>
+  <script src="https://player.polyv.net/script/player.js"></script>
     <script>
-    var player = videojs('player', {
-        controlBar: {
-            playbackRateMenuButton: false // 移除播放速度控件
-        },
-        autoplay: false, // 根据需要设置autoplay
-        preload: 'auto' // 预加载视频
-    });
+        var player;
 
-    player.ready(function() {
-        console.log('Video is ready.');
-    });
-
-    document.getElementById('aiButton').addEventListener('click', function () {
-        document.getElementById('popup').style.display = 'block';
-    });
-
-    function closePopup() {
-        document.getElementById('popup').style.display = 'none';
-    }
-
-    function seekToTime(seconds) {
-        if (player) {
-            player.currentTime(seconds);
-            console.log('Seeking to:', seconds);
+        function initPlayer() {
+            player = polyvPlayer({
+                wrap: '#player',
+                width: '100%',
+                height: 450,
+                vid: 'g9e4d25871afa882f5f26dfe0986a3fc_g',
+                speed: false
+            });
         }
-    }
 
-    // 绑定跳转链接
-    var links = document.querySelectorAll('[data-seek]');
-    links.forEach(function(link) {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            seekToTime(parseInt(this.getAttribute('data-seek')));
+        document.addEventListener('DOMContentLoaded', initPlayer);
+
+        document.getElementById('aiButton').addEventListener('click', function() {
+            document.getElementById('popup').style.display = 'block';
         });
-    });
 
-    // 监听seeking和seeked事件
-    player.on('seeking', function() {
-        console.log('Seeking...');
-    });
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
 
-    player.on('seeked', function() {
-        console.log('Seeked');
-    });
-</script>
+        function seekToTime(seconds) {
+            if (player && typeof player.j2s_seekVideo === 'function') {
+                player.j2s_seekVideo(seconds);
+                console.log('Seeking to:', seconds);
+            } else {
+                console.error('Player not initialized or seek function not available.');
+            }
+        }
+    </script>
 
 </body>
-
 </html>
